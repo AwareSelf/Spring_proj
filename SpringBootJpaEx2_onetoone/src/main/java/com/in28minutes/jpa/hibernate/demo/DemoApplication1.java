@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import com.in28minutes.jpa.hibernate.demo.entity.Course;
 import com.in28minutes.jpa.hibernate.demo.entity.Faculty;
@@ -101,14 +105,38 @@ public class DemoApplication1 implements CommandLineRunner {
 		lst.forEach(System.out::println);
 		
 				
-		lst = cr.deleteByCourseName("Core Java");
-		lst.forEach(System.out::println);
-		System.out.println("After deleting course with course name:'Core Java'");
+	//	lst = cr.deleteByCourseName("Core Java");
+	//	lst.forEach(System.out::println);
+	//	System.out.println("After deleting course with course name:'Core Java'");
 		
 		lst = cr.findAll();
 		lst.forEach(System.out::println);
 		
 		long ct = cr.countByCourseName("SpringBoot");
 		System.out.println("No. of Spring Boot courses as of now:"+ct);
+		
+		logger.info("Sorted Courses based on price in ascending order:");
+		Sort sort = Sort.by(Sort.Direction.ASC, "coursePrice");
+		lst = cr.findAll(sort);
+		lst.forEach(System.out::println);
+		
+		logger.info("Sorted Courses Pagewise based on price in ascending order:");
+        System.out.println("Page 1:");
+		List<Course> lst1 = getAllCoursesByPaging(1,2,"coursePrice");
+		lst1.forEach(System.out::println);
+		System.out.println("Page 2:");
+		lst1 = getAllCoursesByPaging(2,2,"coursePrice");
+	    lst1.forEach(System.out::println);
 	}
+     public List<Course> getAllCoursesByPaging(Integer pageNo, Integer pageSize, 
+		                                                           String sortBy)
+      {	//pageNo: The current page number,pageSize: Number of records on each page.
+        PageRequest paging = PageRequest.of(pageNo-1, pageSize, Sort.by(sortBy));
+        Page<Course> pagedResult = cr.findAll(paging);
+          if(pagedResult.hasContent()) {
+              return pagedResult.getContent();
+           } else {
+              return new ArrayList<Course>();
+           }
+      }
 }
