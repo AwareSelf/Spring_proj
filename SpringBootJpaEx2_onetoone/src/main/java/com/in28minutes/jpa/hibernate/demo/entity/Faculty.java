@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 public class Faculty {
 	
 	@Id
-	@GeneratedValue
+	//@GeneratedValue
 	int facultyId;
 	
 	String facultyName;
@@ -31,8 +31,9 @@ public class Faculty {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Faculty(String facultyName, int totExp, LocalDate joinDate) {
+	public Faculty(int facultyId,String facultyName, int totExp, LocalDate joinDate) {
 		super();
+		this.facultyId = facultyId;
 		this.facultyName = facultyName;
 		this.totExp = totExp;
 		this.joinDate = joinDate;

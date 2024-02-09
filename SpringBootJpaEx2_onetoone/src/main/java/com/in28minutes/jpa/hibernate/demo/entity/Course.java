@@ -16,7 +16,7 @@ public class Course {
 	@Id
 	//@GeneratedValue(strategy=SEQUENCE, generator="CUST_SEQ")
 
-	@GeneratedValue
+	//@GeneratedValue
 	int courseId; //course_id
 	
 	//@Column(name="cname")
@@ -31,16 +31,18 @@ public class Course {
 	
 	public Course() {}
 	
-	public Course(String courseName, double coursePrice) {
+	public Course(int courseId,String courseName, double coursePrice) {
 		super();
+		this.courseId = courseId;
 		this.courseName = courseName;
 		this.coursePrice = coursePrice;
 	}
 	
 	
 
-	public Course(String courseName, double coursePrice, Faculty courseFaculty) {
+	public Course(int courseId,String courseName, double coursePrice, Faculty courseFaculty) {
 		super();
+		this.courseId = courseId;
 		this.courseName = courseName;
 		this.coursePrice = coursePrice;
 		this.courseFaculty = courseFaculty;

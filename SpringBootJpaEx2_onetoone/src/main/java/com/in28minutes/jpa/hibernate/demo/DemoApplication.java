@@ -37,14 +37,14 @@ public class DemoApplication implements CommandLineRunner {
 		
 		
 		//String facultyName, int totExp, LocalDate joinDate
-		Faculty f = new Faculty("Nisha Tyagi",15,LocalDate.now());
+		Faculty f = new Faculty(1,"Nisha Tyagi",15,LocalDate.now());
 		fr.save(f);
 		
-		Course c = new Course("Core Java",15000);
+		Course c = new Course(101,"Core Java",15000);
 		c.setCourseFaculty(f);
 		cr.save(c);
 		
-		c = cr.findById(2);
+		c = cr.findById(101);
 		System.out.println("course:"+c.getCourseName()+" has faculty:"+c.getCourseFaculty());
 		
 		/*
